@@ -12,6 +12,7 @@ namespace GameRace
         private double distance;
         private TypeRace typeRace;
         private double time;
+        private bool successRegistration = true;
         // индекс ТС - объект ТС
         private Dictionary<int, Transport> transports = new Dictionary<int, Transport>();
         // индекс ТС - местоположение ТС
@@ -34,7 +35,7 @@ namespace GameRace
                 }
             }
         }
-        public void registration(Transport ts)
+        public bool registration(Transport ts)
         {
             try
             {
@@ -42,10 +43,13 @@ namespace GameRace
                 transports.Add(transports.Count, ts);
                 place.Add(place.Count, 0.0);
                 placeRacer.Add(placeRacer.Count, 0);
+                return true;
             }
             catch (Exception)
             {
-                Console.WriteLine("Тип транспорта не соответсвует типу гонки");
+                transports.Clear();
+                Console.WriteLine($"Тип транспорта {ts.name} не соответсвует типу гонки");
+                return false;
             }
         }
         public void Start()
