@@ -80,34 +80,34 @@
     {
         class BabaYagaStupa : AirTransport
         {
-            public BabaYagaStupa() : base("Ступа Бабы Яги", 1.0, 3.4) { }
+            public BabaYagaStupa() : base("Ступа Бабы Яги", 1.0, 1.5) { }
             private protected override void changeAcceleratinoFactor()
             {
                 // показательная функция 
-                acceleratinoFactor = Math.Pow(acceleratinoFactor, 1 / place);
+                acceleratinoFactor = Math.Pow(acceleratinoFactor, 1 / (place*0.4));
             }
         }
         class Broom : AirTransport
         {
-            public Broom() : base("Метла", 2.0, 2.6) { }
+            public Broom() : base("Метла", 0.3, 2.6) { }
             private protected override void changeAcceleratinoFactor()
             {
                 // линейная
-                acceleratinoFactor = Math.Abs(5 - place * 0.3);
+                acceleratinoFactor = Math.Abs(5 - place * 0.3)/200;
             }
         }
         class MagicCarpet : AirTransport
         {
-            public MagicCarpet() : base("Ковер-самолет", 1.6, 2.9) { }
+            public MagicCarpet() : base("Ковер-самолет", 0.2, 1.3) { }
             private protected override void changeAcceleratinoFactor()
             {
                 // квадратная
-                acceleratinoFactor = Math.Pow((place * 0.9), 2); ;
+                acceleratinoFactor = Math.Pow((place * 0.01), 2)/800; ;
             }
         }
         class FlyingShip : AirTransport
         {
-            public FlyingShip() : base("Летучий Корабль", 3.1, 1.3) { }
+            public FlyingShip() : base("Летучий Корабль", 1.4, 1.3) { }
             private protected override void changeAcceleratinoFactor()
             {
                 // логарифмическая функция
@@ -120,13 +120,13 @@
     {
         class WalkingBoots : GroundTransport
         {
-            public WalkingBoots() : base("Сапоги-скороходы", 3.0, 1.0, 2.1) { }
+            public WalkingBoots() : base("Сапоги-скороходы", 3.0, 1.0, 20.1) { }
             // скорость константа
 
         }
         class PumpkinCarriage : GroundTransport
         {
-            public PumpkinCarriage() : base("Карета-тыква", 7.0, 2.0, 1.2) { }
+            public PumpkinCarriage() : base("Карета-тыква", 7.0, 2.0, 35.2) { }
             private protected override void changeSpeed()
             {
                 //линейная функция
@@ -135,7 +135,7 @@
         }
         class HutOnChickenLegs : GroundTransport
         {
-            public HutOnChickenLegs() : base("Избушка на курьих ножках", 4.0, 1.0, 8.0) { }
+            public HutOnChickenLegs() : base("Избушка на курьих ножках", 4.0, 1.0, 17.0) { }
             private protected override void changeSpeed()
             {
                 //логарифмическая функция
@@ -145,7 +145,7 @@
         }
         class Centaur : GroundTransport
         {
-            public Centaur() : base("Кентавр", 6.0, 2.0, 6.0) { }
+            public Centaur() : base("Кентавр", 6.0, 1.0, 74.0) { }
             private protected override void changeSpeed()
             {
                 // тригонометрическая функция 

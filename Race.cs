@@ -52,7 +52,7 @@ namespace GameRace
             catch (Exception)
             {
                 transports.Clear();
-                Console.WriteLine($"Тип транспорта [red]{ts.name}[/] не соответсвует типу гонки");
+                AnsiConsole.Markup($"Тип транспорта [red]{ts.name}[/] не соответсвует типу гонки\n");
                 return false;
             }
         }
