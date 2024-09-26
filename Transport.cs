@@ -33,6 +33,7 @@
         {
             place = startSpeed * currentTime + acceleratinoFactor * Math.Pow(currentTime, 2) / 2;
         }
+        private protected virtual void changeAcceleratinoFactor() { }
     }
 
     class GroundTransport : Transport
@@ -70,5 +71,46 @@
             }
 
         }
+    }
+
+    namespace AirRacer
+    {
+        class BabaYagaStupa : AirTransport
+        {
+            public BabaYagaStupa() : base("Ступа Бабы Яги", 1.0, 3.4) { }
+            private protected override void changeAcceleratinoFactor()
+            {
+                // показательная функция 
+                acceleratinoFactor = Math.Pow(acceleratinoFactor, 1 / place);
+            }
+        }
+        class Broom : AirTransport
+        {
+            public Broom() : base("Метла", 2.0, 2.6) { }
+            private protected override void changeAcceleratinoFactor()
+            {
+                // линейная
+                acceleratinoFactor = Math.Abs(5 - place * 0.3);
+            }
+        }
+        class MagicCarpet : AirTransport
+        {
+            public MagicCarpet() : base("Ковер-самолет", 1.6, 2.9) { }
+            private protected override void changeAcceleratinoFactor()
+            {
+                // квадратная
+                acceleratinoFactor = Math.Pow((place * 0.9), 2); ;
+            }
+        }
+        class FlyingShip : AirTransport
+        {
+            public FlyingShip() : base("Летучий Корабль", 3.1, 1.3) { }
+            private protected override void changeAcceleratinoFactor()
+            {
+                // логарифмическая функция
+                acceleratinoFactor = Math.Abs(Math.Log(place * 1.2, 2));
+            }
+        }
+
     }
 }
