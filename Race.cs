@@ -1,4 +1,5 @@
-﻿using Transports;
+﻿using Spectre.Console;
+using Transports;
 namespace GameRace
 {
     public enum TypeRace
@@ -18,7 +19,9 @@ namespace GameRace
         // индекс ТС - местоположение ТС
         private Dictionary<int, double> place = new Dictionary<int, double>();
         // индекс ТС - номер, под которым ТС финишировало 
-        private Dictionary<int, int> placeRacer = new Dictionary<int, int>();
+        private Dictionary<int, string> placeRacer = new Dictionary<int, string>();
+        // индекс ТС - время его финиша
+        private Dictionary<int, string> timeFinish = new Dictionary<int, string>();
         public Race(double distance, TypeRace typeRace)
         {
             this.distance = distance;
@@ -42,40 +45,68 @@ namespace GameRace
                 checkTypeTs(ts);
                 transports.Add(transports.Count, ts);
                 place.Add(place.Count, 0.0);
-                placeRacer.Add(placeRacer.Count, 0);
+                placeRacer.Add(placeRacer.Count, "");
+                timeFinish.Add(timeFinish.Count, "");
                 return true;
             }
             catch (Exception)
             {
                 transports.Clear();
-                Console.WriteLine($"Тип транспорта {ts.name} не соответсвует типу гонки");
+                Console.WriteLine($"Тип транспорта [red]{ts.name}[/] не соответсвует типу гонки");
                 return false;
             }
         }
         public void Start()
         {
             Transport ts;
+            int tsIndex;
             int placeResult = 1;
             Console.WriteLine("!!!!!Старт гонки!!!!!");
-            while (placeResult != transports.Count + 1)
+
+            var table = new Table().Centered();
+            table.Title("Таблица результатов");
+            table.Centered();
+            table.AddColumn("Участник");
+            table.AddColumn("Прогресс");
+            table.AddColumn("Место");
+            table.AddColumn("Время финиша");
+            for (int i = 0; i < transports.Count; i++)
             {
-                foreach (var TSslot in transports)
-                {
-                    if (placeRacer[TSslot.Key] != 0) continue;
-                    ts = TSslot.Value;
-                    ts.move(time);
-                    place[TSslot.Key] = ts.place;
-                    // достиг финиша
-                    if (place[TSslot.Key] >= distance)
-                    {
-                        Console.WriteLine($"{placeResult} место - {ts.name}, время финиша - {time}");
-                        placeRacer[TSslot.Key] = placeResult;
-                        placeResult++;
-                    }
-                }
-                time++;
+                table.AddRow(transports[i].name, "0%", placeRacer[i], timeFinish[i]);
             }
-            Console.WriteLine("Конец гонки");
+           
+
+            AnsiConsole.Live(table)
+                .Start(ctx =>
+                {
+                    while (placeResult != transports.Count + 1)
+                    {
+                        ctx.Refresh();
+                        foreach (var TSslot in transports)
+                        {
+                            table.RemoveRow(0);
+                            ts = TSslot.Value;
+                            tsIndex = TSslot.Key;
+                            if (placeRacer[tsIndex] == "")
+                            {
+                                ts.move(time);
+                                place[tsIndex] = ts.place;
+                                if (place[tsIndex] >= distance)
+                                {
+                                    placeRacer[tsIndex] = placeResult.ToString();
+                                    placeResult++;
+                                    timeFinish[tsIndex] = time.ToString();
+                                    place[tsIndex] = distance;
+                                }
+                                
+                            }
+                            table.AddRow(ts.name, (Math.Round(place[tsIndex] / distance * 100)).ToString() + "%", placeRacer[tsIndex], timeFinish[tsIndex]);
+                        }
+                        time++;
+                    }
+
+
+                });
         }
     }
 }

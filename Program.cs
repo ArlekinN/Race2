@@ -1,5 +1,7 @@
 ﻿using GameRace;
 using Spectre.Console;
+using System.Threading.Tasks;
+using Transports;
 using Transports.AirRacer;
 using Transports.GroundRacer;
 
@@ -12,7 +14,7 @@ public static class Program
             .Title("Какой тип транспорта может участвовать в гонке?")
             .PageSize(3)
         .AddChoices(new[] {
-            "Воздушный", "Наземный", "Любой",
+            "Воздушный", "Наземный", "Оба типа",
             }));
 
         AnsiConsole.Markup($"Тип гонки выбран [green]{typeRaceConsole}[/]!\n");
@@ -46,13 +48,13 @@ public static class Program
                 {
                     AnsiConsole.Markup("[red]Длина должна быть больше 0![/]\n");
 
-                } 
+                }
             }
             catch (Exception)
             {
                 AnsiConsole.Markup("[red]Это не число![/]\n");
             }
- 
+
         }
         Race race = new Race(distance, typeRace);
 
@@ -77,7 +79,7 @@ public static class Program
                 if (!successRegistration)
                 {
                     break;
-                } 
+                }
                 switch (transport)
                 {
                     case "Ступа Бабы Яги":
@@ -108,7 +110,7 @@ public static class Program
             }
             if (successRegistration) break;
         }
-        //race.Start();
+        race.Start();
     }
 
    
