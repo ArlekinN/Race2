@@ -24,11 +24,26 @@ namespace GameRace
         }
         private void checkTypeTs(Transport ts)
         {
-           
+            if (typeRace != TypeRace.airAndGround)
+            {
+                if (typeRace.ToString() != ts.typeTS.ToString())
+                {
+                    throw new Exception();
+                }
+            }
         }
         public void registration(Transport ts)
         {
-         
+            try
+            {
+                checkTypeTs(ts);
+                transports.Add(transports.Count, ts);
+                place.Add(place.Count, 0.0);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Тип транспорта не соответсвует типу гонки");
+            }
         }
         public void Start()
         {
