@@ -15,7 +15,7 @@
         {
             this.name = name;
             this.typeTS = typeTs;
-            this.place = 0;
+            this.place = 1;
             this.startSpeed = startSpeed;
         }
         internal abstract void move(double currentTime);
@@ -32,6 +32,7 @@
         internal override void move(double currentTime)
         {
             place = startSpeed * currentTime + acceleratinoFactor * Math.Pow(currentTime, 2) / 2;
+            changeAcceleratinoFactor();
         }
         private protected virtual void changeAcceleratinoFactor() { }
     }
@@ -58,6 +59,7 @@
             {
                 currentTimeBeforeRest--;
                 place += startSpeed;
+                changeSpeed();
             }
             else if (currentTimeRest > 0)
             {
@@ -71,6 +73,7 @@
             }
 
         }
+        private protected virtual void changeSpeed() { }
     }
 
     namespace AirRacer
@@ -112,5 +115,43 @@
             }
         }
 
+    }
+    namespace GroundRacer
+    {
+        class WalkingBoots : GroundTransport
+        {
+            public WalkingBoots() : base("Сапоги-скороходы", 3.0, 1.0, 2.1) { }
+            // скорость константа
+
+        }
+        class PumpkinCarriage : GroundTransport
+        {
+            public PumpkinCarriage() : base("Карета-тыква", 7.0, 2.0, 1.2) { }
+            private protected override void changeSpeed()
+            {
+                //линейная функция
+                currentSpeed *= 1.2;
+            }
+        }
+        class HutOnChickenLegs : GroundTransport
+        {
+            public HutOnChickenLegs() : base("Избушка на курьих ножках", 4.0, 1.0, 8.0) { }
+            private protected override void changeSpeed()
+            {
+                //логарифмическая функция
+                currentSpeed = Math.Log(currentSpeed * 1.4, 2);
+
+            }
+        }
+        class Centaur : GroundTransport
+        {
+            public Centaur() : base("Кентавр", 6.0, 2.0, 6.0) { }
+            private protected override void changeSpeed()
+            {
+                // тригонометрическая функция 
+                double angle = Math.PI * currentSpeed / 180.0;
+                currentSpeed = Math.Sin(angle) * 100;
+            }
+        }
     }
 }
