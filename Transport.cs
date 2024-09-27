@@ -11,6 +11,7 @@
         internal TypeTS typeTS { get; private protected set; }
         private protected double startSpeed { get; set; }
         internal double place { get; set; }
+        
         private protected Transport(string name, TypeTS typeTs, double startSpeed)
         {
             this.name = name;
@@ -58,7 +59,7 @@
             if (currentTimeBeforeRest > 0)
             {
                 currentTimeBeforeRest--;
-                place += startSpeed;
+                place += currentSpeed;
                 changeSpeed();
             }
             else if (currentTimeRest > 0)
@@ -89,6 +90,7 @@
         }
         class Broom : AirTransport
         {
+            
             public Broom() : base("Метла", 0.3, 2.6) { }
             private protected override void changeAcceleratinoFactor()
             {
@@ -139,7 +141,7 @@
             private protected override void changeSpeed()
             {
                 //логарифмическая функция
-                currentSpeed = Math.Log(currentSpeed * 1.4, 2);
+                currentSpeed = Math.Log(currentSpeed * 5, 2)*100;
 
             }
         }

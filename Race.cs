@@ -13,7 +13,6 @@ namespace GameRace
         private double distance;
         private TypeRace typeRace;
         private double time;
-        private bool successRegistration = true;
         // индекс ТС - объект ТС
         private Dictionary<int, Transport> transports = new Dictionary<int, Transport>();
         // индекс ТС - местоположение ТС
@@ -61,6 +60,7 @@ namespace GameRace
             Transport ts;
             int tsIndex;
             int placeResult = 1;
+
             Console.WriteLine("!!!!!Старт гонки!!!!!");
 
             var table = new Table().Centered();
@@ -93,6 +93,7 @@ namespace GameRace
                                 place[tsIndex] = ts.place;
                                 if (place[tsIndex] >= distance)
                                 {
+                                    
                                     placeRacer[tsIndex] = placeResult.ToString();
                                     placeResult++;
                                     timeFinish[tsIndex] = time.ToString();
@@ -107,6 +108,7 @@ namespace GameRace
 
 
                 });
+
         }
     }
 }
