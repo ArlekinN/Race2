@@ -1,10 +1,7 @@
 ﻿using GameRace;
 using Spectre.Console;
-using System.Threading.Tasks;
-using Transports;
-using Transports.AirRacer;
-using Transports.GroundRacer;
-
+using Race_progress.groundTS;
+using Race_progress.airTs;
 public static class Program
 {
     public static void Main(string[] args)
@@ -22,13 +19,13 @@ public static class Program
         switch (typeRaceConsole)
         {
             case "Воздушный":
-                typeRace = TypeRace.air;
+                typeRace = TypeRace.Air;
                 break;
             case "Наземный":
-                typeRace = TypeRace.ground;
+                typeRace = TypeRace.Ground;
                 break;
             default:
-                typeRace = TypeRace.airAndGround;
+                typeRace = TypeRace.AirAndGround;
                 break;
         }
 
@@ -83,28 +80,28 @@ public static class Program
                 switch (transport)
                 {
                     case "Ступа Бабы Яги":
-                        successRegistration = race.registration(new BabaYagaStupa());
+                        successRegistration = race.Registration(new BabaYagaStupa());
                         break;
                     case "Метла":
-                        successRegistration = race.registration(new Broom());
+                        successRegistration = race.Registration(new Broom());
                         break;
                     case "Ковер-самолет":
-                        successRegistration = race.registration(new MagicCarpet());
+                        successRegistration = race.Registration(new MagicCarpet());
                         break;
                     case "Летучий корабль":
-                        successRegistration = race.registration(new FlyingShip());
+                        successRegistration = race.Registration(new FlyingShip());
                         break;
                     case "Сапоги-скороходы":
-                        successRegistration = race.registration(new WalkingBoots());
+                        successRegistration = race.Registration(new WalkingBoots());
                         break;
                     case "Карета-тыква":
-                        successRegistration = race.registration(new PumpkinCarriage());
+                        successRegistration = race.Registration(new PumpkinCarriage());
                         break;
                     case "Избушка на курьих ножках":
-                        successRegistration = race.registration(new HutOnChickenLegs());
+                        successRegistration = race.Registration(new HutOnChickenLegs());
                         break;
                     case "Кентавр":
-                        successRegistration = race.registration(new Centaur());
+                        successRegistration = race.Registration(new Centaur());
                         break;
                 }
             }

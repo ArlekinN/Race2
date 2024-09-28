@@ -4,15 +4,15 @@ namespace GameRace
 {
     public enum TypeRace
     {
-        air,
-        ground,
-        airAndGround
+        Air,
+        Ground,
+        AirAndGround
     }
-    class Race
+    internal class Race
     {
-        private double distance;
-        private TypeRace typeRace;
-        private double time;
+        private double Distance { get; set; }
+        private TypeRace TypeRace { get; set; }
+        private double Time { get; set; }
         // индекс ТС - объект ТС
         private Dictionary<int, Transport> transports = new Dictionary<int, Transport>();
         // индекс ТС - местоположение ТС
@@ -21,27 +21,27 @@ namespace GameRace
         private Dictionary<int, string> placeRacer = new Dictionary<int, string>();
         // индекс ТС - время его финиша
         private Dictionary<int, string> timeFinish = new Dictionary<int, string>();
-        public Race(double distance, TypeRace typeRace)
+        internal Race(double distance, TypeRace typeRace)
         {
-            this.distance = distance;
-            this.typeRace = typeRace;
-            time = 1;
+            Distance = distance;
+            TypeRace = typeRace;
+            Time = 1;
         }
-        private void checkTypeTs(Transport ts)
+        private void CheckTypeTs(Transport ts)
         {
-            if (typeRace != TypeRace.airAndGround)
+            if (TypeRace != TypeRace.AirAndGround)
             {
-                if (typeRace.ToString() != ts.typeTS.ToString())
+                if (TypeRace.ToString() != ts.TypeTS.ToString())
                 {
                     throw new Exception();
                 }
             }
         }
-        public bool registration(Transport ts)
+        internal bool Registration(Transport ts)
         {
             try
             {
-                checkTypeTs(ts);
+                CheckTypeTs(ts);
                 transports.Add(transports.Count, ts);
                 place.Add(place.Count, 0.0);
                 placeRacer.Add(placeRacer.Count, "");
@@ -51,11 +51,11 @@ namespace GameRace
             catch (Exception)
             {
                 transports.Clear();
-                AnsiConsole.Markup($"Тип транспорта [red]{ts.name}[/] не соответсвует типу гонки\n");
+                AnsiConsole.Markup($"Тип транспорта [red]{ts.Name}[/] не соответсвует типу гонки\n");
                 return false;
             }
         }
-        public void Start()
+        internal void Start()
         {
             Transport ts;
             int tsIndex;
@@ -72,7 +72,7 @@ namespace GameRace
             table.AddColumn("Время финиша");
             for (int i = 0; i < transports.Count; i++)
             {
-                table.AddRow(transports[i].name, "0%", placeRacer[i], timeFinish[i]);
+                table.AddRow(transports[i].Name, "0%", placeRacer[i], timeFinish[i]);
             }
            
 
@@ -89,26 +89,23 @@ namespace GameRace
                             tsIndex = TSslot.Key;
                             if (placeRacer[tsIndex] == "")
                             {
-                                ts.move(time);
-                                place[tsIndex] = ts.place;
-                                if (place[tsIndex] >= distance)
+                                ts.Move(Time);
+                                place[tsIndex] = ts.Place;
+                                if (place[tsIndex] >= Distance)
                                 {
                                     
                                     placeRacer[tsIndex] = placeResult.ToString();
                                     placeResult++;
-                                    timeFinish[tsIndex] = time.ToString();
-                                    place[tsIndex] = distance;
+                                    timeFinish[tsIndex] = Time.ToString();
+                                    place[tsIndex] = Distance;
                                 }
                                 
                             }
-                            table.AddRow(ts.name, (Math.Round(place[tsIndex] / distance * 100)).ToString() + "%", placeRacer[tsIndex], timeFinish[tsIndex]);
+                            table.AddRow(ts.Name, (Math.Round(place[tsIndex] / Distance * 100)).ToString() + "%", placeRacer[tsIndex], timeFinish[tsIndex]);
                         }
-                        time++;
+                        Time++;
                     }
-
-
                 });
-
         }
     }
 }
